@@ -1,4 +1,5 @@
 const mongoose= require('mongoose')
+const { string } = require('zod')
 
 const adminschema = new mongoose.Schema({
     email:{
@@ -6,7 +7,9 @@ const adminschema = new mongoose.Schema({
         unique: true,
         required: true
     },
-    password:String
+    username:String,
+    password:String,
+    
 
 })
 const userschema = new mongoose.Schema({
@@ -14,7 +17,7 @@ const userschema = new mongoose.Schema({
         type:String,
         unique: true,
         required: true
-    },
+    },username:String,
     password:String,
     courseID:[{type:mongoose.Schema.Types.ObjectId, ref:'course'}]
 
@@ -25,7 +28,7 @@ const courseSchema= new mongoose.Schema({
     course_description:String,
     price:Number,
     instructor:{
-        type:mongoose.model.Schema.ObjectId,
+        type:mongoose.Schema.ObjectId,
         ref:'admin'
     }
 })
