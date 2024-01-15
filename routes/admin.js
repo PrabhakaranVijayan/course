@@ -12,6 +12,7 @@ let signup= zod.object({
 })
 
 
+
 router.post("/signup",async (req,res)=>{
     let input= signup.safeParse(req.body)
     if(!input.success){
@@ -23,8 +24,8 @@ router.post("/signup",async (req,res)=>{
         res.status(400).send("password should be 8-15 characters")
         return;
     }
-    let user= input.data.email
-    let id= await admin.findOne({user})
+    
+    let id= await admin.findOne({email:input.data.email})
     if(id){
         res.status(401).json({message:"already exist"})
         return;
@@ -37,7 +38,27 @@ router.post("/signup",async (req,res)=>{
         res.status(200).json({message:`account created successfully ${input.data.username}`,token})
     }
 })
+//   router.use(authenticate)
+router.post('/login', async (req,res)=>{
+    let input = signup.safeParse(req.body)
+    if(!input.success){
+        res.json({alert:input.error})
+        console.log(input.error)
+        return;
+    }
+    let adminlogin= await admin.findOne({email:input.data.email,username:input.data.username,password:input.data.password})
+    if(adminlogin){
+        let token = jwt.sign({email:input.data.email},secret,{expiresIn:'1h'})
+       res.status(400).json({message:`login successful ${input.data.username}`})
+       console.log(token);
 
+    }
+    else{
+        res.send("please check your username and password")
+        console.log(adminlogin)
+    } 
+    
+})
 
 
 

@@ -28,7 +28,7 @@ const courseSchema= new mongoose.Schema({
     course_description:String,
     price:Number,
     instructor:{
-        type:mongoose.Schema.ObjectId,
+        type:mongoose.Schema.Types.ObjectId,
         ref:'admin'
     }
 })
