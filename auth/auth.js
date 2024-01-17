@@ -4,7 +4,7 @@ require('dotenv').config()
 const secret= process.env.SECRET_ID
 
 const authenticate= (req,res,next)=>{
-    const authheader= req.header.authorisation
+    const authheader= req.headers.authorization
     if(!authheader){
         return res.status(401).send("no token headers")
         

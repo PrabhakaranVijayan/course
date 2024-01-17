@@ -59,8 +59,25 @@ router.post('/login', async (req,res)=>{
     } 
     
 })
+router.use(authenticate)
+const admin_name=(req,res,next)=>{
+    courseSchema.pre('save',function(next){
+        this.instructor= req.admin._id,
+        next();
+    })
+    next()
+}
+router.post('/courses',admin_name,async (req,res)=>{
+    let new_course=new course(req.body)
+    await new_course.save()
+    res.send(`course created successfully courseID:${new_course._id}`)
+})
 
-
+// {
+//     "course_title":"webdev",
+//     "course_description":"full MERN stack",
+//     "price":3999
+// }
 
 
 

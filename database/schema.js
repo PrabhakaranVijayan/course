@@ -26,11 +26,8 @@ const userschema = new mongoose.Schema({
 const courseSchema= new mongoose.Schema({
     course_title:String,
     course_description:String,
-    price:Number,
-    instructor:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'admin'
-    }
+    price:Number
+    
 })
 
 const admin= mongoose.model("admin",adminschema)
